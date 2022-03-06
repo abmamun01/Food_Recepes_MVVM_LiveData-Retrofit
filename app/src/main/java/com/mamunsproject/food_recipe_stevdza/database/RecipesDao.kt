@@ -1,4 +1,4 @@
-package com.mamunsproject.food_recipe_stevdza
+package com.mamunsproject.food_recipe_stevdza.database
 
 import androidx.room.Dao
 import androidx.room.Insert

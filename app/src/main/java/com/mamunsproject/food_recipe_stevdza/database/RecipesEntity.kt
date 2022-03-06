@@ -1,4 +1,4 @@
-package com.mamunsproject.food_recipe_stevdza
+package com.mamunsproject.food_recipe_stevdza.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
