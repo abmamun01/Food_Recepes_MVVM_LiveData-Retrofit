@@ -31,7 +31,7 @@ class RecipesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-        recipesViewModel= ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
+        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
 
     }
 
@@ -44,13 +44,32 @@ class RecipesFragment : Fragment() {
 
         setupRecyclerView()
 
-        requestApiData()
+        //This Function will read the database instead calling API again & again
+        readDatabase()
 
         return mView;
     }
 
+    private fun readDatabase() {
+
+        mainViewModel.readRecipes.observe(viewLifecycleOwner, { database ->
+
+            /** If database is not then Set Data from ROOM DB else Request new API*/
+            if (database.isNotEmpty()) {
+                Log.d("RecipesFragment", "readDatabaseCall")
+
+                mAdapter.setData(database[0].foodRecipe)
+                hideShimmerEffect()
+            } else {
+                requestApiData()
+            }
+        })
+
+    }
+
     private fun requestApiData() {
 
+        Log.d("RecipesFragment", "requestApiDataCall")
         mainViewModel.getRecipes(recipesViewModel.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
 
@@ -63,7 +82,7 @@ class RecipesFragment : Fragment() {
                     hideShimmerEffect()
                     Toast.makeText(
                         requireContext(),
-                        response.message.toString()+"HELLLO ERROR",
+                        response.message.toString() + "HELLLO ERROR",
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -80,8 +99,6 @@ class RecipesFragment : Fragment() {
         })
 
     }
-
-
 
 
     private fun setupRecyclerView() {
