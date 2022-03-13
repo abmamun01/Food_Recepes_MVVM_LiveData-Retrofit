@@ -73,7 +73,7 @@ dependencies {
     kapt "androidx.databinding:databinding-common:4.0.2"
 
     // DataStore
-    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha04"
 
 
 
@@ -117,4 +117,9 @@ dependencies {
 
     // Jsoup
     implementation 'org.jsoup:jsoup:1.13.1'
+
+
+
+    // DataStore Preferences
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }

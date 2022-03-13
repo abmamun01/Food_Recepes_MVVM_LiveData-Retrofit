@@ -59,6 +59,7 @@ class RecipesRowBinding {
             imageView.load(imageUrl)
             {
                 crossfade(600)
+                error(R.drawable.error_icon)
             }
         }
     }
