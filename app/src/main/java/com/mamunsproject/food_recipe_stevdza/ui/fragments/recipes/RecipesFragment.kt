@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mamunsproject.food_recipe_stevdza.viewmodels.MainViewModel
 import com.mamunsproject.food_recipe_stevdza.R
@@ -17,22 +18,28 @@ import com.mamunsproject.food_recipe_stevdza.adapter.RecipesAdapter
 import com.mamunsproject.food_recipe_stevdza.databinding.FragmentRecipesBinding
 import com.mamunsproject.food_recipe_stevdza.observeOnce
 import com.mamunsproject.food_recipe_stevdza.utils.Constant.Companion.API_KEY
+import com.mamunsproject.food_recipe_stevdza.utils.NetworkListener
 import com.mamunsproject.food_recipe_stevdza.utils.NetworkResult
 import com.mamunsproject.food_recipe_stevdza.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_recipes.view.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
+    private val args by navArgs<RecipesFragmentArgs>()
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
 
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
+
+    private lateinit var networkListener: NetworkListener
+
 
     private val mAdapter by lazy { RecipesAdapter() }
 
@@ -60,8 +67,25 @@ class RecipesFragment : Fragment() {
         readDatabase()
 
 
+
+        lifecycleScope.launch {
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvaibility(requireContext())
+                .collect { status ->
+                    Log.d("NetworkListener", status.toString())
+                    recipesViewModel.networkStatus = status
+                    recipesViewModel.showNetworkStatus()
+                }
+
+        }
+
         binding.recipesFav.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            if (recipesViewModel.networkStatus) {
+
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            } else {
+                recipesViewModel.showNetworkStatus()
+            }
         }
 
         return binding.root;
@@ -71,6 +95,8 @@ class RecipesFragment : Fragment() {
 
 
         lifecycleScope.launch {
+
+
             /** Instead of calling Observe , we calling ObserveOnce Function which we created in MyExtension
              * Because when the application run for the first time (readDatabase & requestApiData) call both
              * to get read from this type of bug this MyExtensionFunction file created
@@ -78,7 +104,7 @@ class RecipesFragment : Fragment() {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner, { database ->
 
                 /// If database is not then Set Data from ROOM DB else Request new API*/
-                if (database.isNotEmpty()) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipesFragment", "readDatabaseCall")
 
                     mAdapter.setData(database[0].foodRecipe)
