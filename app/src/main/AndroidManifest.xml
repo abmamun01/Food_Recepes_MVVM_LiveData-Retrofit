@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -16,8 +15,12 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.DetailsActivity"
+            android:exported="true"
+            android:label="Details"
+            android:theme="@style/DetailsActivityStyle" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
@@ -27,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
