@@ -1,8 +1,12 @@
 package com.mamunsproject.food_recipe_stevdza.models
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+//Parcelize will help add this in navigation graph to parse something
+@Parcelize
 data class Result_(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
@@ -12,6 +16,9 @@ data class Result_(
 
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
+
+    @SerializedName("veryHealthy")
+    val veryHealthy: Boolean,
 
     @SerializedName("extendedIngredients")
     val extendedIngredients: List<ExtendedIngredient>,
@@ -46,4 +53,4 @@ data class Result_(
     @SerializedName("weightWatcherSmartPoints")
     val weightWatcherSmartPoints: Int
 
-)
+):Parcelable
