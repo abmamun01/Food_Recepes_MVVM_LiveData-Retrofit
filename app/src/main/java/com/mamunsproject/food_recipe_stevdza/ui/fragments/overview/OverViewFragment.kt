@@ -10,6 +10,7 @@ import coil.load
 import com.mamunsproject.food_recipe_stevdza.R
 import com.mamunsproject.food_recipe_stevdza.models.Result_
 import kotlinx.android.synthetic.main.fragment_over_view.view.*
+import org.jsoup.Jsoup
 
 
 class OverViewFragment : Fragment() {
@@ -37,6 +38,10 @@ class OverViewFragment : Fragment() {
         view.like_textView.text = myBundle?.aggregateLikes.toString()
         view.timer_textView.text = myBundle?.readyInMinutes.toString()
         view.summary_text.text = myBundle?.summary
+        myBundle?.summary.let {
+            val summary = Jsoup.parse(it).text()
+            view.summary_text.text = summary
+        }
 
         if (myBundle?.vegetarian == true) {
             view.vegetarian_imageView.setColorFilter(

@@ -14,6 +14,7 @@ import coil.load
 import com.mamunsproject.food_recipe_stevdza.R
 import com.mamunsproject.food_recipe_stevdza.models.Result_
 import com.mamunsproject.food_recipe_stevdza.ui.fragments.recipes.RecipesFragmentDirections
+import org.jsoup.Jsoup
 
 class RecipesRowBinding {
 
@@ -83,6 +84,17 @@ class RecipesRowBinding {
             {
                 crossfade(600)
                 error(R.drawable.error_icon)
+            }
+        }
+
+
+        @BindingAdapter("parseHtml")
+        @JvmStatic
+        fun parseHtml(textView: TextView, description: String?) {
+            if (description != null) {
+                //Here we are parsing our html text and use this description textview
+                val desc = Jsoup.parse(description).text()
+                textView.text = desc
             }
         }
     }

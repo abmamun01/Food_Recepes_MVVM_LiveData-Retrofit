@@ -3,10 +3,11 @@ package com.mamunsproject.food_recipe_stevdza.utils
 import androidx.recyclerview.widget.DiffUtil
 import com.mamunsproject.food_recipe_stevdza.models.Result_
 
-class RecipesDiffUtil(
+                // <T> it represent Generics
+class RecipesDiffUtil<T>(
 
-    private val oldList: List<Result_>,
-    private val newList: List<Result_>
+    private val oldList: List<T>,
+    private val newList: List<T>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
