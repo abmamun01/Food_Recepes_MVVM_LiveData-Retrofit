@@ -11,6 +11,8 @@ import com.mamunsproject.food_recipe_stevdza.adapter.PagerAdapter
 import com.mamunsproject.food_recipe_stevdza.ui.fragments.ingredients.IngredientsFragment
 import com.mamunsproject.food_recipe_stevdza.ui.fragments.instruction.InstructionFragment
 import com.mamunsproject.food_recipe_stevdza.ui.fragments.overview.OverViewFragment
+import com.mamunsproject.food_recipe_stevdza.utils.Constant
+import com.mamunsproject.food_recipe_stevdza.utils.Constant.Companion.RECIPE_RESULT_KEY
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.place_holder_row_layout.*
 
@@ -40,7 +42,7 @@ class DetailsActivity : AppCompatActivity() {
         titles.add("Instructions")
 
         val resultBundle = Bundle()
-        resultBundle.putParcelable("recipeBundle", args.result)
+        resultBundle.putParcelable(RECIPE_RESULT_KEY, args.result)
 
         val adapter = PagerAdapter(
             resultBundle,

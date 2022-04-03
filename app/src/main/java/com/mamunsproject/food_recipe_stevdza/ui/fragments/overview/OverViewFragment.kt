@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import coil.load
 import com.mamunsproject.food_recipe_stevdza.R
 import com.mamunsproject.food_recipe_stevdza.models.Result_
+import com.mamunsproject.food_recipe_stevdza.utils.Constant
+import com.mamunsproject.food_recipe_stevdza.utils.Constant.Companion.RECIPE_RESULT_KEY
 import kotlinx.android.synthetic.main.fragment_over_view.view.*
 import org.jsoup.Jsoup
 
@@ -31,7 +33,7 @@ class OverViewFragment : Fragment() {
 
 
         val args = arguments
-        val myBundle: Result_? = args?.getParcelable("recipeBundle")
+        val myBundle: Result_? = args?.getParcelable(RECIPE_RESULT_KEY)
 
         view.mainImage.load(myBundle?.image)
         view.title_textView.text = myBundle?.title

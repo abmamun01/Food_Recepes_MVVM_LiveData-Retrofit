@@ -5,9 +5,10 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-//Parcelize will help add this in navigation graph to parse something
+//Parcel ize will help add this in navigation graph to parse something
 @Parcelize
 data class Result_(
+
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
 
@@ -22,6 +23,7 @@ data class Result_(
 
     @SerializedName("extendedIngredients")
     val extendedIngredients: List<ExtendedIngredient>,
+
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
 
@@ -34,13 +36,17 @@ data class Result_(
     val readyInMinutes: Int,
 
     @SerializedName("sourceName")
-    val sourceName: String,
+    val sourceName: String?,
+
     @SerializedName("sourceUrl")
     val sourceUrl: String,
+
     @SerializedName("summary")
     val summary: String,
+
     @SerializedName("sustainable")
     val sustainable: Boolean,
+
     @SerializedName("title")
     val title: String,
 
